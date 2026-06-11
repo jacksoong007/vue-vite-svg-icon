@@ -1,0 +1,67 @@
+{
+  "name": "vue-vite-svg-icon",
+  "version": "0.1.0",
+  "description": "Vue 3 SVG icon component and on-demand Vite plugin",
+  "type": "module",
+  "files": [
+    "dist",
+    "src",
+    "types",
+    "README.md"
+  ],
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
+  "types": "./types/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./types/index.d.ts",
+      "import": "./src/index.ts",
+      "require": "./dist/index.cjs"
+    },
+    "./component": {
+      "types": "./types/component.d.ts",
+      "import": "./src/SvgIcon.vue"
+    },
+    "./vite": {
+      "types": "./types/vite.d.ts",
+      "import": "./src/vite/index.mjs",
+      "require": "./dist/vite.cjs"
+    },
+    "./style.css": "./dist/style.css",
+    "./client": {
+      "types": "./types/client.d.ts"
+    }
+  },
+  "scripts": {
+    "build": "vite build",
+    "test": "node --test __tests__/*.test.mjs",
+    "pack:check": "pnpm pack --pack-destination .pack",
+    "prepack": "pnpm build"
+  },
+  "peerDependencies": {
+    "vite": "^5.0.0",
+    "vue": "^3.3.0"
+  },
+  "dependencies": {
+    "@vue/compiler-dom": "^3.5.26",
+    "@vue/compiler-sfc": "^3.5.26",
+    "fast-glob": "^3.3.3",
+    "svgo": "^2.8.0",
+    "typescript": "^5.7.3"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-vue": "^5.2.1"
+  },
+  "publishConfig": {
+    "access": "restricted",
+    "registry": "https://depend.iflytek.com/artifactory/api/npm/npm-repo"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "license": "UNLICENSED",
+  "sideEffects": [
+    "*.css",
+    "*.vue"
+  ]
+}
