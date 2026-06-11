@@ -33,6 +33,28 @@ test('生产模式虚拟模块只包含使用清单', async () => {
   assert.match(names, /\["chart"\]/)
 })
 
+test('虚拟注册模块可以在 SSR 环境中执行', async () => {
+  const root = await fs.mkdtemp(path.join(os.tmpdir(), 'svg-icon-plugin-'))
+  const iconDir = path.join(root, 'icons')
+  const sourceDir = path.join(root, 'src')
+  await fs.mkdir(iconDir)
+  await fs.mkdir(sourceDir)
+  await fs.writeFile(
+    path.join(iconDir, 'chart.svg'),
+    '<svg viewBox="0 0 10 10"><path d="M0 0h10v10z"/></svg>'
+  )
+  await fs.writeFile(
+    path.join(sourceDir, 'Demo.vue'),
+    '<template><svg-icon icon-class="chart" /></template>'
+  )
+  const plugin = createSvgIconPlugin({ iconDirs: [iconDir], sourceDirs: [sourceDir] })
+  plugin.configResolved({ command: 'build' })
+  await plugin.buildStart()
+  const register = await plugin.load('\0virtual:svg-icons-register')
+  const moduleUrl = `data:text/javascript,${encodeURIComponent(register)}`
+  await assert.doesNotReject(() => import(moduleUrl))
+})
+
 test('显式动态图标配置覆盖运行时表达式时不输出开发警告', async () => {
   const root = await fs.mkdtemp(path.join(os.tmpdir(), 'svg-icon-plugin-'))
   const iconDir = path.join(root, 'icons')

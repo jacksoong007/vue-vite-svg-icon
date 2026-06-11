@@ -1,4 +1,4 @@
-import { defineComponent as i, computed as r, onMounted as u, watch as f, createElementBlock as d, openBlock as p, normalizeStyle as m, normalizeClass as _, createElementVNode as v } from "vue";
+import { defineComponent as i, computed as r, onMounted as u, watch as f, openBlock as d, createElementBlock as p, normalizeStyle as m, normalizeClass as _, createElementVNode as v } from "vue";
 const g = ["href"], h = /* @__PURE__ */ i({
   __name: "SvgIcon",
   props: {
@@ -18,7 +18,7 @@ const g = ["href"], h = /* @__PURE__ */ i({
     });
     async function l() {
     }
-    return u(l), f(() => e.iconClass, l), (s, a) => (p(), d("svg", {
+    return u(l), f(() => e.iconClass, l), (s, a) => (d(), p("svg", {
       class: _(t.value),
       style: m(c.value),
       "aria-hidden": "true"
@@ -31,7 +31,7 @@ const g = ["href"], h = /* @__PURE__ */ i({
   for (const [t, c] of e)
     n[t] = c;
   return n;
-}, C = /* @__PURE__ */ z(h, [["__scopeId", "data-v-723789be"]]);
+}, C = /* @__PURE__ */ z(h, [["__scopeId", "data-v-a614ac61"]]);
 function I(o) {
   return o;
 }

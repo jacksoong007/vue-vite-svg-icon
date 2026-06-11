@@ -10,7 +10,7 @@ const componentFile = path.resolve(currentDir, '../src/SvgIcon.vue')
 
 test('resolver 只处理 SvgIcon', () => {
   const resolver = SvgIconResolver()
-  assert.equal(resolver('SvgIcon'), '@dsj/svg-icon/component')
+  assert.equal(resolver('SvgIcon'), 'vue-vite-svg-icon/component')
   assert.equal(resolver('ElButton'), undefined)
 })
 

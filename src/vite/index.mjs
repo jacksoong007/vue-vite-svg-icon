@@ -29,10 +29,12 @@ function loadSvgSprite() {
   }
   svg.innerHTML = sprite
 }
-if (document.readyState === 'loading') {
-  document.addEventListener('DOMContentLoaded', loadSvgSprite, { once: true })
-} else {
-  loadSvgSprite()
+if (typeof document !== 'undefined') {
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', loadSvgSprite, { once: true })
+  } else {
+    loadSvgSprite()
+  }
 }
 export default {}
 `
@@ -135,7 +137,7 @@ export function createSvgIconPlugin(options) {
   }
 
   return {
-    name: 'dsj:svg-icon-library',
+    name: 'vue-vite-svg-icon',
     configResolved(config) {
       isBuild = config.command === 'build'
       const configAliases = config.resolve?.alias || []
@@ -171,7 +173,7 @@ export function createSvgIconPlugin(options) {
 export function SvgIconResolver() {
   return name => {
     if (name === 'SvgIcon') {
-      return '@dsj/svg-icon/component'
+      return 'vue-vite-svg-icon/component'
     }
   }
 }

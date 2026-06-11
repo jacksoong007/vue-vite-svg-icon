@@ -46,7 +46,7 @@ onMounted(warnMissingIcon)
 watch(() => props.iconClass, warnMissingIcon)
 </script>
 
-<style scoped lang="scss">
+<style scoped>
 .svg-icon {
   width: 1em;
   height: 1em;

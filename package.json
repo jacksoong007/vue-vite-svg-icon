@@ -2,12 +2,30 @@
   "name": "vue-vite-svg-icon",
   "version": "0.1.0",
   "description": "Vue 3 SVG icon component and on-demand Vite plugin",
+  "keywords": [
+    "vue",
+    "vite",
+    "svg",
+    "icon",
+    "sprite",
+    "on-demand"
+  ],
+  "author": "jacksoong007",
+  "license": "MIT",
+  "homepage": "https://github.com/jacksoong007/vue-vite-svg-icon#readme",
+  "bugs": {
+    "url": "https://github.com/jacksoong007/vue-vite-svg-icon/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jacksoong007/vue-vite-svg-icon.git"
+  },
   "type": "module",
   "files": [
     "dist",
-    "src",
     "types",
-    "README.md"
+    "README.md",
+    "LICENSE"
   ],
   "main": "./dist/index.cjs",
   "module": "./dist/index.js",
@@ -15,16 +33,17 @@
   "exports": {
     ".": {
       "types": "./types/index.d.ts",
-      "import": "./src/index.ts",
+      "import": "./dist/index.js",
       "require": "./dist/index.cjs"
     },
     "./component": {
       "types": "./types/component.d.ts",
-      "import": "./src/SvgIcon.vue"
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
     },
     "./vite": {
       "types": "./types/vite.d.ts",
-      "import": "./src/vite/index.mjs",
+      "import": "./dist/vite.js",
       "require": "./dist/vite.cjs"
     },
     "./style.css": "./dist/style.css",
@@ -35,8 +54,10 @@
   "scripts": {
     "build": "vite build",
     "test": "node --test __tests__/*.test.mjs",
-    "pack:check": "pnpm pack --pack-destination .pack",
-    "prepack": "pnpm build"
+    "pack:check": "npm pack --dry-run --cache .npm-cache",
+    "release:npm": "npm publish --access public --registry=https://registry.npmjs.org --cache .npm-cache",
+    "prepack": "pnpm build",
+    "prepublishOnly": "pnpm test && pnpm build"
   },
   "peerDependencies": {
     "vite": "^5.0.0",
@@ -50,18 +71,19 @@
     "typescript": "^5.7.3"
   },
   "devDependencies": {
-    "@vitejs/plugin-vue": "^5.2.1"
+    "@vitejs/plugin-vue": "^5.2.1",
+    "vite": "^5.4.0",
+    "vue": "^3.5.0"
   },
   "publishConfig": {
-    "access": "restricted",
-    "registry": "https://depend.iflytek.com/artifactory/api/npm/npm-repo"
+    "access": "public",
+    "registry": "https://registry.npmjs.org"
   },
   "engines": {
     "node": ">=18.0.0"
   },
-  "license": "UNLICENSED",
   "sideEffects": [
-    "*.css",
-    "*.vue"
-  ]
+    "*.css"
+  ],
+  "packageManager": "pnpm@10.33.0"
 }
