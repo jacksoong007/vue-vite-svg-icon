@@ -1,3 +1,5 @@
 .pack/
 .npm-cache/
 node_modules/
+docs/
+outputs/
