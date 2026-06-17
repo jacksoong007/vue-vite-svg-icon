@@ -9,6 +9,19 @@ import {
   parseExpression,
 } from './evaluator.mjs'
 
+const ICON_NAME_PROPS = ['icon-name', 'iconName', 'icon-class', 'iconClass']
+const PREFERRED_ICON_NAME_PROPS = ['icon-name', 'iconName']
+
+function getIconPropName(prop) {
+  if (prop.type === 6) return prop.name
+  if (prop.type === 7 && prop.name === 'bind') return prop.arg?.content
+}
+
+function getIconNameProp(props) {
+  const candidates = props.filter(prop => ICON_NAME_PROPS.includes(getIconPropName(prop)))
+  return candidates.find(prop => PREFERRED_ICON_NAME_PROPS.includes(getIconPropName(prop))) || candidates[0]
+}
+
 function parseFor(expression, env, aliases) {
   const match = expression.match(/^\s*(?:\(([^,)]+).*\)|([^,\s]+))\s+(?:in|of)\s+(.+)$/)
   if (!match) return
@@ -31,14 +44,7 @@ function analyzeTemplate(template, env, file) {
       const forDirective = node.props.find(prop => prop.type === 7 && prop.name === 'for')
       if (forDirective?.exp?.content) parseFor(forDirective.exp.content, env, aliases)
       if (['svg-icon', 'SvgIcon'].includes(node.tag)) {
-        const prop = node.props.find(item => {
-          if (item.type === 6) return ['icon-class', 'iconClass'].includes(item.name)
-          return (
-            item.type === 7 &&
-            item.name === 'bind' &&
-            ['icon-class', 'iconClass'].includes(item.arg?.content)
-          )
-        })
+        const prop = getIconNameProp(node.props)
         if (prop?.type === 6 && prop.value?.content) {
           addNames([prop.value.content], prop.loc.start.line)
         }

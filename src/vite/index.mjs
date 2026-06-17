@@ -112,7 +112,7 @@ export function createSvgIconPlugin(options) {
     if (!isBuild && analysis.diagnostics.length && !hasDynamicCoverage(options)) {
       for (const item of analysis.diagnostics) {
         console.warn(
-          `[svg-icon] 无法静态分析 ${item.file}:${item.line} icon-class="${item.expression}"`
+          `[svg-icon] 无法静态分析 ${item.file}:${item.line} icon-name/icon-class="${item.expression}"`
         )
       }
     }

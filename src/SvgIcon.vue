@@ -1,6 +1,6 @@
 <template>
   <svg :class="svgClass" :style="svgStyle" aria-hidden="true">
-    <use :href="iconName" />
+    <use :href="symbolHref" />
   </svg>
 </template>
 
@@ -9,7 +9,8 @@ import { computed, nextTick, onMounted, watch } from 'vue'
 
 const props = withDefaults(
   defineProps<{
-    iconClass: string
+    iconName?: string
+    iconClass?: string
     className?: string
     color?: string
     size?: string | number
@@ -21,7 +22,8 @@ const props = withDefaults(
   }
 )
 
-const iconName = computed(() => `#icon-${props.iconClass}`)
+const resolvedIconName = computed(() => props.iconName || props.iconClass || '')
+const symbolHref = computed(() => (resolvedIconName.value ? `#icon-${resolvedIconName.value}` : ''))
 const svgClass = computed(() => ['svg-icon', props.className].filter(Boolean))
 const svgStyle = computed(() => {
   const style: Record<string, string> = {}
@@ -37,13 +39,17 @@ const svgStyle = computed(() => {
 async function warnMissingIcon() {
   if (!import.meta.env.DEV) return
   await nextTick()
-  if (!document.getElementById(`icon-${props.iconClass}`)) {
-    console.warn(`[SvgIcon] 未找到图标: ${props.iconClass}`)
+  if (!resolvedIconName.value) {
+    console.warn('[SvgIcon] 缺少图标名，请使用 icon-name 或 icon-class')
+    return
+  }
+  if (!document.getElementById(`icon-${resolvedIconName.value}`)) {
+    console.warn(`[SvgIcon] 未找到图标: ${resolvedIconName.value}`)
   }
 }
 
 onMounted(warnMissingIcon)
-watch(() => props.iconClass, warnMissingIcon)
+watch(resolvedIconName, warnMissingIcon)
 </script>
 
 <style scoped>

@@ -16,9 +16,10 @@ test('resolver 只处理 SvgIcon', () => {
 
 test('公共组件保留兼容属性和 currentColor', async () => {
   const source = await fs.readFile(componentFile, 'utf8')
+  assert.match(source, /iconName/)
   assert.match(source, /iconClass/)
   assert.match(source, /className/)
   assert.match(source, /color/)
   assert.match(source, /currentColor/)
-  assert.match(source, /:href="iconName"/)
+  assert.match(source, /:href="symbolHref"/)
 })

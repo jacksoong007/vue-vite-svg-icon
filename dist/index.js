@@ -1,42 +1,43 @@
-import { defineComponent as i, computed as r, onMounted as u, watch as f, openBlock as d, createElementBlock as p, normalizeStyle as m, normalizeClass as _, createElementVNode as v } from "vue";
-const g = ["href"], h = /* @__PURE__ */ i({
+import { defineComponent as u, computed as t, onMounted as f, watch as m, openBlock as d, createElementBlock as v, normalizeStyle as p, normalizeClass as _, createElementVNode as g } from "vue";
+const h = ["href"], y = /* @__PURE__ */ u({
   __name: "SvgIcon",
   props: {
+    iconName: {},
     iconClass: {},
     className: { default: "" },
     color: { default: "" },
     size: { default: "" }
   },
   setup(o) {
-    const e = o, n = r(() => `#icon-${e.iconClass}`), t = r(() => ["svg-icon", e.className].filter(Boolean)), c = r(() => {
+    const e = o, n = t(() => e.iconName || e.iconClass || ""), c = t(() => n.value ? `#icon-${n.value}` : ""), a = t(() => ["svg-icon", e.className].filter(Boolean)), i = t(() => {
       const s = {};
       if (e.color && (s.color = e.color), e.size) {
-        const a = typeof e.size == "number" ? `${e.size}px` : e.size;
-        s.width = a, s.height = a;
+        const l = typeof e.size == "number" ? `${e.size}px` : e.size;
+        s.width = l, s.height = l;
       }
       return s;
     });
-    async function l() {
+    async function r() {
     }
-    return u(l), f(() => e.iconClass, l), (s, a) => (d(), p("svg", {
-      class: _(t.value),
-      style: m(c.value),
+    return f(r), m(n, r), (s, l) => (d(), v("svg", {
+      class: _(a.value),
+      style: p(i.value),
       "aria-hidden": "true"
     }, [
-      v("use", { href: n.value }, null, 8, g)
+      g("use", { href: c.value }, null, 8, h)
     ], 6));
   }
 }), z = (o, e) => {
   const n = o.__vccOpts || o;
-  for (const [t, c] of e)
-    n[t] = c;
+  for (const [c, a] of e)
+    n[c] = a;
   return n;
-}, C = /* @__PURE__ */ z(h, [["__scopeId", "data-v-a614ac61"]]);
-function I(o) {
+}, N = /* @__PURE__ */ z(y, [["__scopeId", "data-v-f89937e8"]]);
+function C(o) {
   return o;
 }
 export {
-  C as SvgIcon,
-  C as default,
-  I as defineSvgIcons
+  N as SvgIcon,
+  N as default,
+  C as defineSvgIcons
 };

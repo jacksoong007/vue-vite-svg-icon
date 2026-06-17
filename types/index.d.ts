@@ -1,7 +1,11 @@
 import type { DefineComponent } from 'vue'
 
 export interface SvgIconProps {
-  iconClass: string
+  iconName?: string
+  /**
+   * @deprecated Use iconName instead.
+   */
+  iconClass?: string
   className?: string
   color?: string
   size?: string | number

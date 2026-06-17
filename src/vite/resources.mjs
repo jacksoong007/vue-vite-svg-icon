@@ -68,7 +68,7 @@ export function resolveIconNames(index, analysis, options = {}) {
     (options.dynamicIcons?.length || 0) > 0 || (options.dynamicPatterns?.length || 0) > 0
   if (options.isBuild && analysis.diagnostics.length && !hasDynamicCoverage) {
     const detail = analysis.diagnostics
-      .map(item => `- ${item.file}:${item.line} icon-class="${item.expression}"`)
+      .map(item => `- ${item.file}:${item.line} icon-name/icon-class="${item.expression}"`)
       .join('\n')
     throw new Error(`[svg-icon] 存在未声明的动态表达式:\n${detail}`)
   }

@@ -53,7 +53,7 @@ import { SvgIcon } from 'vue-vite-svg-icon'
 </script>
 
 <template>
-  <SvgIcon icon-class="charts/chart" color="#409eff" :size="20" />
+  <SvgIcon icon-name="charts/chart" color="#409eff" :size="20" />
 </template>
 ```
 
@@ -61,7 +61,8 @@ import { SvgIcon } from 'vue-vite-svg-icon'
 
 | 属性 | 类型 | 必填 | 说明 |
 | --- | --- | --- | --- |
-| `iconClass` | `string` | 是 | 图标名称 |
+| `iconName` | `string` | 二选一 | 图标名称，模板中使用 `icon-name` |
+| `iconClass` | `string` | 二选一 | 兼容旧属性，模板中使用 `icon-class`，建议使用 `iconName` |
 | `className` | `string` | 否 | 附加 CSS 类名 |
 | `color` | `string` | 否 | 图标颜色 |
 | `size` | `string \| number` | 否 | 图标尺寸，数字按 px 处理 |
@@ -120,7 +121,7 @@ charts/line/line.svg       -> charts/line/line
 多个 `iconDirs` 中相同的相对路径会被判定为图标名重复。页面应使用完整图标名：
 
 ```vue
-<SvgIcon icon-class="charts/chart" />
+<SvgIcon icon-name="charts/chart" />
 ```
 
 ## 插件选项
@@ -147,9 +148,9 @@ import svgIconNames from 'virtual:svg-icons-names'
 
 插件可以静态分析：
 
-- `icon-class="chart"`
-- `:icon-class="'chart'"`
-- `:icon-class="active ? 'bar' : 'line'"`
+- `icon-name="chart"`
+- `:icon-name="'chart'"`
+- `:icon-name="active ? 'bar' : 'line'"`
 - 当前 SFC 中的字符串常量、静态对象属性和静态对象数组
 - `v-for="item in items"` 与 `as const`
 - `defineSvgIcons(['chart', 'line'])`
@@ -162,14 +163,19 @@ import { defineSvgIcons } from 'vue-vite-svg-icon'
 const allowedIcons = defineSvgIcons(['chart', 'line'] as const)
 ```
 
-跨页面场景也可以使用 `dynamicIcons`。`dynamicPatterns` 必须包含明确前缀或后缀，
-例如 `status-*`；禁止使用 `*` 全量匹配。
+跨页面场景也可以使用 `dynamicIcons`。如果需要加载某个目录下的图标，可以通过
+`dynamicPatterns` 声明，例如 `dynamicPatterns: ['common/*']` 会保留 `common`
+目录下的图标。`dynamicPatterns` 必须包含明确前缀或后缀，例如 `status-*`；
+禁止使用 `*` 全量匹配。
+
+为了向下兼容，组件和插件仍支持旧属性 `icon-class` / `iconClass`，新代码建议使用
+语义更明确的 `icon-name` / `iconName`。
 
 ## 故障排查
 
 - `非法图标文件名`：将目录名和文件名改为小写 kebab-case。
 - `图标名称重复`：合并重复资源或使用不同业务名称。
-- `找不到图标`：检查图标目录以及名称是否与 `icon-class` 一致。
+- `找不到图标`：检查图标目录以及名称是否与 `icon-name` 一致。
 - `未声明的动态表达式`：使用 `defineSvgIcons`、`dynamicIcons` 或受限的
   `dynamicPatterns`。
 - 开发环境 `[SvgIcon] 未找到图标`：检查虚拟清单和 Symbol ID

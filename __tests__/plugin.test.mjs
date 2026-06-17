@@ -21,7 +21,7 @@ test('生产模式虚拟模块只包含使用清单', async () => {
   )
   await fs.writeFile(
     path.join(sourceDir, 'Demo.vue'),
-    '<template><svg-icon icon-class="chart" /></template>'
+    '<template><svg-icon icon-name="chart" /></template>'
   )
   const plugin = createSvgIconPlugin({ iconDirs: [iconDir], sourceDirs: [sourceDir] })
   plugin.configResolved({ command: 'build' })
@@ -45,7 +45,7 @@ test('虚拟注册模块可以在 SSR 环境中执行', async () => {
   )
   await fs.writeFile(
     path.join(sourceDir, 'Demo.vue'),
-    '<template><svg-icon icon-class="chart" /></template>'
+    '<template><svg-icon icon-name="chart" /></template>'
   )
   const plugin = createSvgIconPlugin({ iconDirs: [iconDir], sourceDirs: [sourceDir] })
   plugin.configResolved({ command: 'build' })
@@ -67,7 +67,7 @@ test('显式动态图标配置覆盖运行时表达式时不输出开发警告',
   )
   await fs.writeFile(
     path.join(sourceDir, 'Demo.vue'),
-    '<template><svg-icon :icon-class="runtimeIcon" /></template>'
+    '<template><svg-icon :icon-name="runtimeIcon" /></template>'
   )
   const plugin = createSvgIconPlugin({
     iconDirs: [iconDir],
